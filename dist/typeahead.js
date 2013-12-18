@@ -1,11 +1,11 @@
 /*!
- * typeahead.js 0.9.3
+ * typeahead.js 0.9.4
  * https://github.com/twitter/typeahead
  * Copyright 2013 Twitter, Inc. and other contributors; Licensed MIT
  */
 
 (function($) {
-    var VERSION = "0.9.3";
+    var VERSION = "0.9.4";
     var utils = {
         isMsie: function() {
             var match = /(msie) ([\w.]+)/i.exec(navigator.userAgent);
@@ -996,9 +996,14 @@
                 utils.each(this.datasets, function(i, dataset) {
                     dataset.getSuggestions(query, function(suggestions) {
                         var matches = suggestions.length;
-                        if (matches >= 1) {
-                            suggestion = suggestions[0];
-                            that.eventBus.trigger("matched", suggestion.datum, suggestion.dataset);
+                        var selectedSuggestion;
+                        utils.each(suggestions, function(i, suggestion) {
+                            if (suggestion.value == query) {
+                                selectedSuggestion = suggestion;
+                            }
+                        });
+                        if (selectedSuggestion) {
+                            that.eventBus.trigger("matched", selectedSuggestion.datum, selectedSuggestion.dataset);
                         } else {
                             that.eventBus.trigger("mismatched");
                         }

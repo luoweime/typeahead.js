@@ -237,17 +237,20 @@ var TypeaheadView = (function() {
         dataset.getSuggestions(query, function(suggestions) {
 
 	  	  var matches = suggestions.length;
-      	  if (matches >= 1) {
-            suggestion = suggestions[0];
-
-			// let event handler decide whether to auto complete
+          var selectedSuggestion;
+          utils.each(suggestions, function(i, suggestion) {
+            if (suggestion.value == query) {
+              selectedSuggestion = suggestion;
+            }
+          });
+          if (selectedSuggestion) {
             that.eventBus.trigger(
               'matched',
-              suggestion.datum,
-              suggestion.dataset
+              selectedSuggestion.datum,
+              selectedSuggestion.dataset
             );
-	  	  } else {
-		    that.eventBus.trigger('mismatched');
+          } else {
+            that.eventBus.trigger('mismatched');
 		  }
         });
 	  });
