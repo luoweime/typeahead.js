@@ -966,7 +966,9 @@
                 this.inputView.setInputValue(suggestion.value, true);
             },
             _openDropdown: function() {
-                this.dropdownView.open();
+                if (this.inputView.$input.is(":focus")) {
+                    this.dropdownView.open();
+                }
             },
             _closeDropdown: function(e) {
                 this.dropdownView[e.type === "blured" ? "closeUnlessMouseIsOverDropdown" : "close"]();

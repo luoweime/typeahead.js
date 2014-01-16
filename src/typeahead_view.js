@@ -183,7 +183,9 @@ var TypeaheadView = (function() {
     },
 
     _openDropdown: function() {
-      this.dropdownView.open();
+      if (this.inputView.$input.is(":focus")) {
+          this.dropdownView.open();
+      }
     },
 
     _closeDropdown: function(e) {
