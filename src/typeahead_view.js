@@ -252,7 +252,7 @@ var TypeaheadView = (function() {
               selectedSuggestion.dataset
             );
           } else {
-            that.eventBus.trigger('mismatched');
+            that.eventBus.trigger("mismatched", suggestions[0] ? suggestions[0].datum : undefined);
 		  }
         });
 	  });
